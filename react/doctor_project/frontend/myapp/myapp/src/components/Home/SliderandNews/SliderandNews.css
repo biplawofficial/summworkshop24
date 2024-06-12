@@ -1,0 +1,24 @@
+.sliderandnews{
+    display: flex;
+    height:150px;
+    margin-top: 10px;
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+.left
+{
+    align-items:left;
+    width:60%;
+    height:350px
+}
+.right
+{
+    overflow-y:hidden;
+    width:40%;
+    text-align:left;
+}
+.images{
+    width:99%;
+    height:99%;
+    border-radius: 8px;
+}
