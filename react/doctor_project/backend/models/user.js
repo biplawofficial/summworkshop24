@@ -29,7 +29,7 @@ const userSchema = new mongoose.Schema(
       enum: ["male", "female", "other"],
     },
     dob: {
-      type: String,
+      type: String
     },
     maritial_status: {
       type: String,

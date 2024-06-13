@@ -1,6 +1,6 @@
 const bcrypt=require('bcryptjs')
-// const jwt=require('jsonwebtoken')
-// const jwtSecretKet="qwertyuiopasdfghjklzxcvbnm"
+const jwt=require('jsonwebtoken')
+const jwtSecretKey="qwertyuiopasdfghjklzxcvbnmqwerty"
 const userModel=require('../models/user')
 
 register=async(req,res,next)=>{
@@ -26,20 +26,35 @@ catch(error)
     res.status(500).json({message:error.message});
 }}
 
-        
-    module.exports={
-        register
+    login=async (req,res)=>
+        {
+            let email=req.body.email;
+            let pwd=req.body.password;
+            try{
+                const data=await userModel.findOne({email});
+            if(!data)
+            {
+                return res.status(400).json({message:"Please enter correct credentials"});
+            }    
+            const password=await bcrypt.compare(pwd,data.password);
+            if(!password)
+                {
+                    return res.status(400).json({message:"please enter correct password"});
+                }
+                const key={user:{id: data.id}};
+                const options={
+                    expiresIn:'1d',
+                };
+                const authToken =jwt.sign(key,jwtSecretKey,options);
+                return res.json({userData:data,authToken:authToken});
+
+        }  
+        catch(error)
+        {
+            res.status(500).json({message:error.message});
+        }
     }
-
-
-    // login=asynu (req,res,next)=>
-    //     {
-    //         let email=req.body.email;
-    //         let pwd=req.body.pasword;
-    //         try{
-    //             const data=await userMOdel.findOne({email});
-    //         if(!data)
-    //         {
-    //             return res.status(400).json({message;"Please enter correct credentials"});
-    //         }            }
-    //     
+    module.exports=
+        {
+            register,login
+        }
