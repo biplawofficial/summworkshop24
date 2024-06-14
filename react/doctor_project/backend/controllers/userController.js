@@ -43,7 +43,7 @@ catch(error)
                 }
                 const key={user:{id: data.id}};
                 const options={
-                    expiresIn:'1d',
+                    expiresIn:'1d'
                 };
                 const authToken =jwt.sign(key,jwtSecretKey,options);
                 return res.json({userData:data,authToken:authToken});
